@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Appointments</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4faff;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 30px;
+      color: #0077b6;
+    }
+
+    .appointments-container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border: 1px solid #dee2e6;
+    }
+
+    th {
+      background-color: #0077b6;
+      color: white;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f1f9ff;
+    }
+
+    tr:hover {
+      background-color: #e0f0ff;
+      transition: 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+
+  <%- include("partials/navbar", { session: session }) %>
+
+  <h2>My Appointments</h2>
+
+  <div class="appointments-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Doctor</th>
+          <th>Specialization</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Message</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% appointments.forEach(a => { %>
+          <tr>
+            <td><%= a.doctor_name %></td>
+            <td><%= a.specialization %></td>
+            <td><%= a.appointment_date.toISOString().split('T')[0] %></td>
+            <td><%= a.appointment_time %></td>
+            <td><%= a.message || '—' %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

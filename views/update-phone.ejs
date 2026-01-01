@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Phone</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #f0f4ff, #dbeeff);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 50px;
+      color: #0077b6;
+      font-size: 1.8rem;
+    }
+
+    .update-container {
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+
+    input:focus {
+      border-color: #0077b6;
+      background: #fff;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: linear-gradient(to right, #007bff, #00b4d8);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 15px;
+      box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+      background: linear-gradient(to right, #0056b3, #0096c7);
+    }
+
+    .success, .error {
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+
+  <%- include("partials/navbar", { session: session }) %>
+
+  <h2>Update Phone Number</h2>
+
+  <div class="update-container">
+    <form action="/update-phone" method="POST">
+      <label for="phone">New Phone Number:</label>
+      <input type="tel" id="phone" name="phone" placeholder="Enter new phone number" required>
+
+      <button type="submit">Update</button>
+
+      <% if (message) { %>
+        <div class="<%= messageType === 'success' ? 'success' : 'error' %>">
+          <%= message %>
+        </div>
+      <% } %>
+    </form>
+  </div>
+
+</body>
+</html>

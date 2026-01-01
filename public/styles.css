@@ -1,0 +1,201 @@
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f6f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, #007BFF, #0056b3);
+  color: #fff;
+  padding: 40px 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+}
+
+/* Navigation */
+nav {
+  background: #004a99;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+nav a {
+  padding: 14px 22px;
+  color: #fff;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+nav a:hover {
+  background: #003366;
+  border-radius: 4px;
+}
+
+/* Section Styling */
+section {
+  padding: 50px 20px;
+  max-width: 1100px;
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #007BFF;
+}
+
+section p,
+section li {
+  font-size: 1.05rem;
+}
+
+/* Services */
+ul {
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+/* Form */
+form {
+  display: grid;
+  gap: 15px;
+}
+
+input, select, textarea {
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+  transition: border 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #007BFF;
+  outline: none;
+  background: #fff;
+}
+
+/* General Button */
+button {
+  padding: 12px 20px;
+  background: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* PDF Download Button */
+.export-btn {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: linear-gradient(to right, #007BFF, #0056d2);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+}
+
+.export-btn:hover {
+  background: linear-gradient(to right, #0056d2, #0041a8);
+}
+
+/* Form Update Button (for update-phone/email) */
+.update-btn {
+  background: linear-gradient(to right, #28a745, #218838);
+  color: #fff;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  display: block;
+  box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2);
+}
+
+.update-btn:hover {
+  background: linear-gradient(to right, #218838, #1e7e34);
+  transform: scale(1.02);
+}
+
+/* Contact */
+#contact p {
+  margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+  background: #007BFF;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 30px;
+  font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+  }
+
+  nav a {
+    text-align: center;
+    padding: 12px;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  section {
+    padding: 30px 15px;
+  }
+}

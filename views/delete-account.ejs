@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Delete Account</title>
+</head>
+<body>
+  <%- include("partials/navbar", { session: session }) %>
+
+  <h2>Delete Your Account</h2>
+  <p style="color:red;">⚠️ Warning: This action is permanent and cannot be undone.</p>
+
+  <form action="/delete-account" method="POST">
+    <label>Enter your password to confirm:</label><br>
+    <input type="password" name="password" required><br><br>
+    <button type="submit" style="color:white; background:red;">Delete My Account</button>
+  </form>
+</body>
+</html>

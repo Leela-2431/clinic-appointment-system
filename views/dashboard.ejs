@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4faff;
+      color: #333;
+    }
+
+    /* === Navbar Styles === */
+    .navbar {
+      background: linear-gradient(to right, #ffffff, #f0faff);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #e0e0e0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-left img {
+      height: 60px;
+      width: auto;
+      border-radius: 10px;
+    }
+
+    .nav-left span {
+      font-size: 24px;
+      font-weight: bold;
+      color: #0077b6;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #0077b6;
+      font-weight: 600;
+    }
+
+    .nav-links .logout {
+      color: #ff4d4f;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 28px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        background: white;
+        position: absolute;
+        top: 80px;
+        right: 32px;
+        width: 220px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        z-index: 1000;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .hamburger {
+        display: block;
+      }
+    }
+
+    /* === Dashboard Content === */
+    .flash-message {
+      background-color: #d4edda;
+      color: #155724;
+      padding: 10px;
+      margin: 20px auto;
+      width: 90%;
+      border-radius: 5px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .flash-error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .dashboard-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 100px);
+      padding: 30px 20px;
+    }
+
+    .dashboard-card {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .dashboard-card h2 {
+      font-size: 26px;
+      color: #0077b6;
+      margin-bottom: 10px;
+    }
+
+    .dashboard-card p {
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 30px;
+    }
+
+    .download-btn {
+      background: linear-gradient(to right, #007bff, #3399ff);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .download-btn:hover {
+      background: linear-gradient(to right, #0056b3, #007bff);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Navbar -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <img src="/images/logo.jpg" alt="Clinic Logo" />
+      <span>HealthCare Clinic</span>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/">Home</a></li>
+
+      <% if (session && session.patient) { %>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/book-appointment">Book Appointment</a></li>
+        <li><a href="/my-appointments">My Appointments</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/update-phone">Update Phone</a></li>
+        <li><a href="/logout" class="logout">Logout</a></li>
+
+      <% } else if (session && session.admin) { %>
+        <li><a href="/admin-dashboard">Admin Dashboard</a></li>
+        <li><a href="/add-doctor">Add Doctor</a></li>
+        <li><a href="/view-appointments">View Appointments</a></li>
+        <li><a href="/admin-logout" class="logout">Logout</a></li>
+
+      <% } else { %>
+        <li><a href="/patient-login">Login</a></li>
+        <li><a href="/patient-register">Register</a></li>
+      <% } %>
+    </ul>
+  </nav>
+
+  <!-- ✅ Flash Messages -->
+  <% if (success_msg && success_msg.length > 0) { %>
+    <div class="flash-message"><%= success_msg[0] %></div>
+  <% } %>
+  <% if (error_msg && error_msg.length > 0) { %>
+    <div class="flash-message flash-error"><%= error_msg[0] %></div>
+  <% } %>
+
+  <!-- ✅ Dashboard Content -->
+  <div class="dashboard-container">
+    <div class="dashboard-card">
+      <h2>Welcome <%= name %>!</h2>
+      <p>You are logged in successfully.</p>
+      <button class="download-btn" onclick="window.location.href='/export-appointments'">
+        📄 Download Appointments PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- ✅ Toggle Script -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('navLinks');
+      menu.classList.toggle('active');
+    }
+
+    // ✅ Flash fade-out
+    setTimeout(() => {
+      const flashMessages = document.querySelectorAll('.flash-message');
+      flashMessages.forEach(msg => {
+        msg.style.transition = 'opacity 0.5s ease';
+        msg.style.opacity = '0';
+        setTimeout(() => msg.style.display = 'none', 500);
+      });
+    }, 4000);
+  </script>
+
+</body>
+</html>

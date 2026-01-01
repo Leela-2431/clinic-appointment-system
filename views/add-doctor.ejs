@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Doctor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #f0f4ff, #dbeeff);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 90%;
+    }
+
+    h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 30px;
+      font-size: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="time"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+      transition: border 0.3s ease;
+    }
+
+    .form-group input:focus {
+      border-color: #007bff;
+      background: #fff;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .checkbox-group label {
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(to right, #007bff, #3399ff);
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #0056b3, #2176ff);
+      transform: scale(1.02);
+    }
+
+    @media (max-width: 480px) {
+      .form-container {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Add Doctor</h2>
+    <form action="/add-doctor" method="POST">
+      <div class="form-group">
+        <label>Name:</label>
+        <input type="text" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Specialization:</label>
+        <input type="text" name="specialization" required>
+      </div>
+
+      <div class="form-group">
+        <label>Email:</label>
+        <input type="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label>Available Days:</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="available_days" value="Monday"> Monday</label>
+          <label><input type="checkbox" name="available_days" value="Tuesday"> Tuesday</label>
+          <label><input type="checkbox" name="available_days" value="Wednesday"> Wednesday</label>
+          <label><input type="checkbox" name="available_days" value="Thursday"> Thursday</label>
+          <label><input type="checkbox" name="available_days" value="Friday"> Friday</label>
+          <label><input type="checkbox" name="available_days" value="Saturday"> Saturday</label>
+          <label><input type="checkbox" name="available_days" value="Sunday"> Sunday</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Available From:</label>
+        <input type="time" name="available_from" required>
+      </div>
+
+      <div class="form-group">
+        <label>Available To:</label>
+        <input type="time" name="available_to" required>
+      </div>
+
+      <button type="submit">Add Doctor</button>
+    </form>
+  </div>
+
+</body>
+</html>

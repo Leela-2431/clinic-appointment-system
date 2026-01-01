@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #f0f4ff, #dbeeff);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h2 {
+      text-align: center;
+      color: #0077b6;
+      margin-top: 40px;
+      font-size: 2rem;
+    }
+
+    .top-links {
+      text-align: center;
+      margin: 20px 0 30px;
+    }
+
+    .top-links a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #0077b6;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .top-links a:hover {
+      color: #023e8a;
+    }
+
+    .download-btn {
+      text-align: right;
+      margin: 0 auto 20px;
+      max-width: 1100px;
+      padding-right: 10px;
+    }
+
+    .download-btn a {
+      background: linear-gradient(to right, #28a745, #218838);
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .download-btn a:hover {
+      background: linear-gradient(to right, #218838, #1e7e34);
+      transform: scale(1.03);
+    }
+
+    table {
+      width: 90%;
+      max-width: 1100px;
+      margin: 0 auto 50px;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: center;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+      background-color: #0077b6;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f1f9ff;
+    }
+
+    tr:hover {
+      background-color: #e0f0ff;
+      transition: 0.3s ease;
+    }
+
+    td a {
+      color: #e63946;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    td a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      table {
+        width: 95%;
+        font-size: 0.9rem;
+      }
+
+      .download-btn {
+        text-align: center;
+        padding-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <%- include("partials/navbar", { session: session }) %>
+
+  <h2>Admin Dashboard</h2>
+
+  <div class="top-links">
+    <a href="/add-doctor">Add Doctor</a> |
+    <a href="/view-appointments">View All Appointments</a> |
+    <a href="/admin-logout" style="color:#e63946;">Logout</a>
+  </div>
+
+  <div class="download-btn">
+    <a href="/export-appointments">Download Appointments as PDF</a>
+  </div>
+
+  <% if (appointments.length === 0) { %>
+    <p style="text-align:center; color:#333; font-size:1.1rem;">No appointments found.</p>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Patient Name</th>
+          <th>Email</th>
+          <th>Doctor</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% appointments.forEach(app => { %>
+          <tr>
+            <td><%= app.id %></td>
+            <td><%= app.patient_name %></td>
+            <td><%= app.patient_email %></td>
+            <td><%= app.doctor_name %></td>
+            <td><%= new Date(app.date).toISOString().split('T')[0] %></td>
+            <td><%= app.time %></td>
+            <td>
+              <a href="/delete-appointment/<%= app.id %>" onclick="return confirm('Are you sure you want to delete this appointment?');">Delete</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+</body>
+</html>

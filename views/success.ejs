@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title || "Success" %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #e0f7fa, #fff9c4, #f0f4ff);
+      background-size: 300% 300%;
+      animation: bgLoop 14s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    @keyframes bgLoop {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 18px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 480px;
+      width: 90%;
+      backdrop-filter: blur(10px);
+    }
+
+    .success-icon {
+      font-size: 60px;
+      color: #28a745;
+      margin-bottom: 20px;
+    }
+
+    .success-text {
+      font-size: 22px;
+      color: #333;
+      font-weight: 500;
+      margin-bottom: 30px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: linear-gradient(to right, #00b4db, #0072ff);
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(to right, #0072ff, #0059b3);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="success-icon">✅</div>
+    <div class="success-text"><%= message || "Operation completed successfully!" %></div>
+    <a href="<%= redirect || '/dashboard' %>" class="back-btn">Go Back</a>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<style>
+  .navbar {
+    background: linear-gradient(to right, #ffffff, #f0faff);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #e0e0e0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    position: relative;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nav-left img {
+    height: 45px;
+  }
+
+  .nav-left span {
+    font-size: 22px;
+    font-weight: bold;
+    color: #0077b6;
+  }
+
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: #0077b6;
+    font-weight: 600;
+  }
+
+  .nav-links .logout {
+    color: #ff4d4f;
+  }
+
+  .hamburger {
+    display: none;
+    font-size: 26px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      background: white;
+      position: absolute;
+      top: 65px;
+      right: 24px;
+      width: 200px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      z-index: 1000;
+    }
+
+    .nav-links.active {
+      display: flex;
+    }
+
+    .hamburger {
+      display: block;
+    }
+  }
+</style>
+
+<nav class="navbar">
+  <!-- Logo -->
+  <div class="nav-left">
+    <img src="/images/logo.jpg" alt="Clinic Logo" />
+    <span>HealthCare Clinic</span>
+  </div>
+
+  <!-- Hamburger Toggle -->
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+
+  <!-- Navigation Links -->
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/">Home</a></li>
+
+    <% if (session && session.patient) { %>
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li><a href="/book-appointment">Book Appointment</a></li>
+      <li><a href="/my-appointments">My Appointments</a></li>
+      <li><a href="/profile">Profile</a></li>
+      <li><a href="/update-phone">Update Phone</a></li>
+      <li><a href="/logout" class="logout">Logout</a></li>
+
+    <% } else if (session && session.admin) { %>
+      <li><a href="/admin-dashboard">Admin Dashboard</a></li>
+      <li><a href="/add-doctor">Add Doctor</a></li>
+      <li><a href="/view-appointments">View Appointments</a></li>
+      <li><a href="/admin-logout" class="logout">Logout</a></li>
+
+    <% } else { %>
+      <li><a href="/patient-login">Login</a></li>
+      <li><a href="/patient-register">Register</a></li>
+    <% } %>
+  </ul>
+</nav>
+
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById('navLinks');
+    menu.classList.toggle('active');
+  }
+</script>

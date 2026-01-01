@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #f0f7ff, #e6f3ff);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Top Navbar (Home only) */
+    .navbar-simple {
+      background: linear-gradient(to right, #ffffff, #f4fbff);
+      padding: 12px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid #e0e0e0;
+      width: 100%;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .navbar-left img {
+      height: 42px;
+    }
+
+    .navbar-left span {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0077b6;
+    }
+
+    .navbar-right {
+      margin-right: 20px;
+    }
+
+    .navbar-right a {
+      text-decoration: none;
+      color: #0077b6;
+      font-weight: 600;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-right a:hover {
+      color: #023e8a;
+    }
+
+    /* Page container */
+    .container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 100px 20px;
+    }
+
+    /* Login box */
+    .login-box {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      padding: 40px 35px;
+      max-width: 450px;
+      width: 100%;
+      text-align: center;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .login-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #0077b6;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      text-align: left;
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      background: #f9f9f9;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      border-color: #0077b6;
+      background: #fff;
+      box-shadow: 0 0 5px rgba(0, 119, 182, 0.2);
+      outline: none;
+    }
+
+    .login-btn {
+      background: linear-gradient(to right, #007bff, #3399ff);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 14px 0;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+    }
+
+    .login-btn:hover {
+      background: linear-gradient(to right, #0056b3, #2176ff);
+      transform: scale(1.02);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 80px 15px;
+      }
+
+      .login-box {
+        padding: 30px 25px;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Simple Navbar (Only Home) -->
+  <nav class="navbar-simple">
+    <div class="navbar-left">
+      <img src="/images/logo.jpg" alt="Clinic Logo">
+      <span>HealthCare Clinic</span>
+    </div>
+    <div class="navbar-right">
+      <a href="/">🏠 Home</a>
+    </div>
+  </nav>
+
+  <!-- Admin Login Form -->
+  <div class="container">
+    <div class="login-box">
+      <h2>Admin Login</h2>
+      <form method="POST" action="/admin-login">
+        <div class="form-group">
+          <label class="form-label">Email:</label>
+          <input type="email" name="email" class="form-input" placeholder="Enter admin email" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password:</label>
+          <input type="password" name="password" class="form-input" placeholder="Enter password" required>
+        </div>
+
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
