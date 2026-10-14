@@ -107,7 +107,7 @@
 
       <button type="submit">Update</button>
 
-      <% if (message) { %>
+      <% if (typeof message !== 'undefined' && message) { %>
         <div class="<%= messageType === 'success' ? 'success' : 'error' %>">
           <%= message %>
         </div>

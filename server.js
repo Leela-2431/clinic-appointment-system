@@ -135,10 +135,225 @@ app.get("/profile", (req, res) => {
   res.render("profile", { patient: req.session.patient, session: req.session });
 });
 
+// Select Avatar
+app.post("/select-avatar", (req, res) => {
+  if (!req.session.patient) {
+    return res.redirect("/login-register");
+  }
+
+  const { avatar } = req.body;
+  const patientId = req.session.patient.id;
+
+  const allowedAvatars = [
+    "avatar1.png",
+    "avatar2.png",
+    "avatar3.png",
+    "avatar4.jpg",
+    "avatar5.jpg"
+  ];
+
+  if (!allowedAvatars.includes(avatar)) {
+    return res.send("Invalid avatar selected.");
+  }
+
+  const sql = "UPDATE patients SET avatar = ? WHERE id = ?";
+
+  conn.query(sql, [avatar, patientId], (err) => {
+    if (err) {
+      console.error("Error updating avatar:", err);
+      return res.send("Error updating profile image.");
+    }
+
+    // Update session immediately
+    req.session.patient.avatar = avatar;
+
+    res.redirect("/profile");
+  });
+});
+
+// Edit Profile - GET
+app.get("/edit-profile", (req, res) => {
+  if (!req.session.patient) {
+    return res.redirect("/login-register");
+  }
+
+  res.render("edit-profile", {
+    patient: req.session.patient,
+    session: req.session
+  });
+});
+
+// Edit Profile - POST
+app.post("/edit-profile", (req, res) => {
+  if (!req.session.patient) {
+    return res.redirect("/login-register");
+  }
+
+  const { name, email, phone } = req.body;
+  const patientId = req.session.patient.id;
+
+  if (!name || !email) {
+    return res.send("Name and email are required.");
+  }
+
+  const sql = `
+    UPDATE patients
+    SET name = ?, email = ?, phone = ?
+    WHERE id = ?
+  `;
+
+  conn.query(sql, [name, email, phone || null, patientId], (err) => {
+    if (err) {
+      console.error("Error updating profile:", err);
+
+      if (err.code === "ER_DUP_ENTRY") {
+        return res.send("Email already registered.");
+      }
+
+      return res.send("Error updating profile.");
+    }
+
+    // Update session
+    req.session.patient.name = name;
+    req.session.patient.email = email;
+    req.session.patient.phone = phone;
+
+    res.redirect("/profile");
+  });
+});
+
+// Change Password - GET
+app.get("/change-password", (req, res) => {
+  if (!req.session.patient) {
+    return res.redirect("/login-register");
+  }
+
+  res.render("change-password", {
+    session: req.session
+  });
+});
+
+// Change Password - POST
+app.post("/change-password", (req, res) => {
+  if (!req.session.patient) {
+    return res.redirect("/login-register");
+  }
+
+  const { current, newpass, confirm } = req.body;
+  const patientId = req.session.patient.id;
+
+  if (!current || !newpass || !confirm) {
+    return res.send("Please fill in all password fields.");
+  }
+
+  if (newpass !== confirm) {
+    return res.send("New password and confirmation password do not match.");
+  }
+
+  const checkSql = "SELECT password FROM patients WHERE id = ?";
+
+  conn.query(checkSql, [patientId], (err, results) => {
+    if (err) {
+      console.error("Error checking password:", err);
+      return res.send("Error checking password.");
+    }
+
+    if (!results.length) {
+      return res.send("Patient not found.");
+    }
+
+    if (results[0].password !== current) {
+      return res.send("Current password is incorrect.");
+    }
+
+    const updateSql = "UPDATE patients SET password = ? WHERE id = ?";
+
+    conn.query(updateSql, [newpass, patientId], (err) => {
+      if (err) {
+        console.error("Error updating password:", err);
+        return res.send("Error updating password.");
+      }
+
+      // Keep session password updated
+      req.session.patient.password = newpass;
+
+      res.render("success", {
+        title: "Password Updated",
+        message: "Your password has been updated successfully!",
+        redirect: "/profile"
+      });
+    });
+  });
+});
+
+// Delete Account - GET
+app.get("/delete-account", (req, res) => {
+  if (!req.session.patient) {
+    return res.redirect("/login-register");
+  }
+
+  res.render("delete-account", {
+    session: req.session
+  });
+});
+
+// Delete Account - POST
+app.post("/delete-account", (req, res) => {
+  if (!req.session.patient) {
+    return res.redirect("/login-register");
+  }
+
+  const { password } = req.body;
+  const patientId = req.session.patient.id;
+
+  if (!password) {
+    return res.send("Please enter your password.");
+  }
+
+  const checkSql = "SELECT password FROM patients WHERE id = ?";
+
+  conn.query(checkSql, [patientId], (err, results) => {
+    if (err) {
+      console.error("Error checking password:", err);
+      return res.send("Error checking account.");
+    }
+
+    if (!results.length) {
+      return res.send("Patient account not found.");
+    }
+
+    if (results[0].password !== password) {
+      return res.send("Incorrect password. Account was not deleted.");
+    }
+
+    const deleteSql = "DELETE FROM patients WHERE id = ?";
+
+    conn.query(deleteSql, [patientId], (err) => {
+      if (err) {
+        console.error("Error deleting account:", err);
+        return res.send("Error deleting account.");
+      }
+
+      req.session.destroy((err) => {
+        if (err) {
+          console.error("Session destruction error:", err);
+          return res.send("Account deleted, but logout failed.");
+        }
+
+        res.send(`
+          <h2>Account Deleted Successfully</h2>
+          <p>Your account has been permanently deleted.</p>
+          <a href="/login-register">Go to Login</a>
+        `);
+      });
+    });
+  });
+});
+
 // Update Phone (GET + POST)
 app.get("/update-phone", (req, res) => {
   if (!req.session.patient) return res.redirect("/login-register");
-  res.render("update-phone", { session: req.session });
+  res.render("update-phone", { session: req.session , message: null, messageType: null });
 });
 
 app.post("/update-phone", (req, res) => {
